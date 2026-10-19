@@ -64,6 +64,19 @@ h1{margin:0;font-size:1.4rem;font-weight:600;text-align:center;color:#fff;text-s
 .msg{padding:16px 20px;white-space:pre-line;line-height:1.8;text-align:center;font-size:.98rem}
 .bar{height:40px;margin:2px 18px 12px;background:repeating-linear-gradient(90deg,#4a3328 0 2px,#fff 2px 5px,#4a3328 5px 6px,#fff 6px 10px,#4a3328 10px 13px,#fff 13px 15px)}
 .pass button{display:block;margin:0 auto 16px;border:0;border-radius:20px;padding:8px 18px;background:#ffe9a8;color:var(--ink);font:600 .95rem 'Mali',sans-serif;cursor:pointer}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
+.fl{position:fixed;bottom:-50px;z-index:31;pointer-events:none;animation:float 4s ease-out forwards}
+@keyframes float{to{transform:translate(var(--dx),-108vh) rotate(25deg);opacity:0}}
+.sr{display:flex;justify-content:center;padding:2px 0 8px}
+.stamp{width:104px;height:104px;border:3px solid #c1263f;border-radius:50%;color:#c1263f;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:600;font-size:.6rem;letter-spacing:.1em;box-shadow:inset 0 0 0 3px #fff,inset 0 0 0 5px #c1263f;transform:rotate(-12deg) scale(2.6);opacity:0;animation:stamp .45s ease-in 1.2s forwards}
+.stamp b{font-size:1.15rem;letter-spacing:.06em;line-height:1.2}
+@keyframes stamp{to{transform:rotate(-12deg) scale(1);opacity:.8}}
+.ph2{padding:8px 18px 4px;font-weight:600;color:#5b3a8c;font-size:.92rem;text-align:center}
+.ph2 small{display:block;font-weight:400;color:#8a7a70;font-size:.72rem}
+.jp{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 14px 12px}
+.jc{border:2px solid #e3d8f1;background:#faf6ff;border-radius:12px;padding:8px 6px;text-align:center;cursor:pointer;font-family:inherit;color:var(--ink)}
+.jc:active{background:#efe5fb}
+.jc b{display:block;font-size:1.05rem;color:#5b3a8c;line-height:1.3}.jc span{display:block;font-size:.72rem;color:#8a7a70}.jc i{display:block;font-style:normal;font-size:.82rem;margin-top:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -73,6 +86,7 @@ h1{margin:0;font-size:1.4rem;font-weight:600;text-align:center;color:#fff;text-s
 <div class="cloud" style="top:62%;animation-duration:40s;animation-delay:-20s;opacity:.26"></div>
 <button id="snd" aria-label="เปิด/ปิดเพลง">🎵</button>
 <div class="moon"></div>
+<canvas id="fx"></canvas>
 <div id="plane"><svg viewBox="0 0 320 120" aria-hidden="true">
   <path d="M36 44L12 6H54L92 42z" fill="#5b3a8c"/><path d="M22 14H46L40 24z" fill="#ff8a2a"/>
   <path d="M26 62Q26 42 70 40L240 40Q300 42 310 60Q300 80 240 82L70 82Q26 80 26 62z" fill="#fff"/>
@@ -116,6 +130,9 @@ h1{margin:0;font-size:1.4rem;font-weight:600;text-align:center;color:#fff;text-s
  <div class="meta"><div><small>PASSENGER</small><span id="nm"></span></div><div><small>FLIGHT</small>HAPPY TRIP</div><div><small>DATE</small><span id="dt"></span></div><div><small>SEAT</small>ริมหน้าต่าง</div></div>
  <div class="tear"></div>
  <div class="msg" id="msg"></div>
+ <div class="sr"><div class="stamp"><span>ARRIVED</span><b>JAPAN</b><span id="sd"></span></div></div>
+ <div class="ph2">🗣️ คำญี่ปุ่นติดตัวไปใช้<small>แตะเพื่อฟังเสียง (ถ้ามือถือรองรับ)</small></div>
+ <div class="jp" id="jp"></div>
  <div class="bar"></div>
  <button id="again">ดูอีกครั้ง</button>
 </div></div>
@@ -150,6 +167,38 @@ $("snd").addEventListener("click", function(){
   ytf.contentWindow.postMessage(JSON.stringify({event:"command", func: musicOn ? "playVideo" : "pauseVideo", args:""}), "*");
   this.textContent = musicOn ? "🎵" : "🔇";
 });
+var PH = [["ありがとう","อาริงาโตะ","ขอบคุณ"],["すみません","สุมิมาเซ็น","ขอโทษ / ขอทาง"],["おいしい！","โออิชี","อร่อย!"],["トイレはどこですか","โทะอิเระ วะ โดโกะ เดสึ คะ","ห้องน้ำอยู่ไหน"]];
+$("jp").innerHTML = PH.map(function(h,i){ return '<button class="jc" data-i="'+i+'"><b>'+h[0]+'</b><span>'+h[1]+'</span><i>'+h[2]+'</i></button>'; }).join("");
+$("jp").addEventListener("click", function(e){
+  var b = e.target.closest(".jc"); if (!b || !window.speechSynthesis) return;
+  try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(PH[b.dataset.i][0]); u.lang = "ja-JP"; u.rate = .85; speechSynthesis.speak(u); } catch (er) {}
+});
+function fx(){
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var c = $("fx"), x = c.getContext("2d"), P = [], cols = ["#ff8a2a","#ffd36b","#c9a6ff","#ff8fb3","#8fd3ff","#ffffff"];
+  c.width = innerWidth; c.height = innerHeight;
+  function burst(){
+    var bx = innerWidth * (.15 + Math.random() * .7), by = innerHeight * (.12 + Math.random() * .4), col = cols[Math.floor(Math.random() * cols.length)];
+    for (var i = 0; i < 70; i++) { var a = Math.random() * 6.283, v = 1.5 + Math.random() * 4.5; P.push({x:bx, y:by, vx:Math.cos(a)*v, vy:Math.sin(a)*v, l:1, c:col}); }
+    ting(600 + Math.random() * 600);
+  }
+  [0,350,750,1150,1600,2050].forEach(function(t){ setTimeout(burst, t); });
+  var t0 = performance.now();
+  (function f(t){
+    x.clearRect(0, 0, c.width, c.height);
+    P.forEach(function(p){ p.x += p.vx; p.y += p.vy; p.vy += .06; p.vx *= .985; p.l -= .014;
+      if (p.l > 0) { x.globalAlpha = p.l; x.fillStyle = p.c; x.beginPath(); x.arc(p.x, p.y, 2.2, 0, 6.283); x.fill(); } });
+    x.globalAlpha = 1; P = P.filter(function(p){ return p.l > 0; });
+    if (t - t0 < 4200 || P.length) requestAnimationFrame(f); else x.clearRect(0, 0, c.width, c.height);
+  })(t0);
+  var em = ["🎃","🦇","🎃","🧸","✨","🦇","🎃"];
+  for (var k = 0; k < 14; k++) {
+    var el = document.createElement("span"); el.className = "fl"; el.textContent = em[k % em.length];
+    el.style.left = (Math.random() * 90) + "%"; el.style.fontSize = (1.4 + Math.random() * 1.2) + "rem";
+    el.style.setProperty("--dx", ((Math.random() - .5) * 120) + "px"); el.style.animationDuration = (3 + Math.random() * 2.5) + "s"; el.style.animationDelay = (Math.random() * 1.6) + "s";
+    document.body.appendChild(el); setTimeout((function(n){ return function(){ n.remove(); }; })(el), 7500);
+  }
+}
 var XS = [14, 62, 110, 158];
 function clouds(){
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -171,7 +220,7 @@ $("stage").addEventListener("click", function(){
     setTimeout(function(){ $("plane").classList.add("fly"); clouds(); }, 2200);
     setTimeout(function(){
       $("dest").textContent = DEST; $("nm").textContent = NAME; $("dt").textContent = DATE;
-      $("msg").textContent = MESSAGE.replace("{name}", NAME); $("over").classList.add("show");
+      $("msg").textContent = MESSAGE.replace("{name}", NAME); $("over").classList.add("show"); $("sd").textContent = DATE; fx();
     }, 5000);
   }
 });
