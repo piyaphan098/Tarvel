@@ -9,12 +9,13 @@
 :root{--ink:#4a3328;--pink:#e0708f;--sky:#bfe6ff;--brown:#8a5634;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{height:100%}
+html{height:100%;overflow-x:hidden;overscroll-behavior-x:none}
+.lay{position:fixed;inset:0;overflow:hidden;pointer-events:none}
 body{margin:0;min-height:100%;font-family:'Mali','Noto Sans Thai Looped','Sarabun',sans-serif;color:var(--ink);
 background:linear-gradient(#5a3d8a,#b36bb5 45%,#ff9f6e 85%,#ffd9a8);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;overflow-x:hidden}
 h1{margin:0;font-size:1.4rem;font-weight:600;text-align:center;color:#fff;text-shadow:0 2px 6px rgba(60,20,80,.4)}
 #cap{min-height:3em;margin:0;text-align:center;font-size:1.1rem;max-width:19em;color:#fff;text-shadow:0 1px 4px rgba(60,20,80,.5)}
-.cloud{position:fixed;width:110px;height:34px;border-radius:30px;background:#fff;opacity:.3;animation:drift 28s linear infinite;z-index:0}
+.cloud{position:absolute;width:110px;height:34px;border-radius:30px;background:#fff;opacity:.3;animation:drift 28s linear infinite;z-index:0}
 .cloud::before,.cloud::after{content:'';position:absolute;background:#fff;border-radius:50%}
 .cloud::before{width:48px;height:48px;left:16px;top:-24px}.cloud::after{width:36px;height:36px;left:56px;top:-16px}
 @keyframes drift{from{transform:translateX(-160px)}to{transform:translateX(110vw)}}
@@ -34,23 +35,23 @@ h1{margin:0;font-size:1.4rem;font-weight:600;text-align:center;color:#fff;text-s
 .handle{position:absolute;left:50%;top:-22px;width:70px;height:26px;margin-left:-35px;border:7px solid #7a3550;border-bottom:0;border-radius:16px 16px 0 0}
 .tag{position:absolute;right:-8px;top:30px;background:#fff;border:2px solid #ffd36b;border-radius:6px;padding:2px 6px;font-size:.7rem;transform:rotate(8deg);z-index:3}
 #snd{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:20;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.25);font-size:1.2rem;cursor:pointer;display:none}
-.moon{position:fixed;top:7%;left:9%;width:54px;height:54px;border-radius:50%;background:#ffe9a8;box-shadow:0 0 30px 8px rgba(255,233,168,.5);z-index:0}
+.moon{position:absolute;top:7%;left:9%;width:54px;height:54px;border-radius:50%;background:#ffe9a8;box-shadow:0 0 30px 8px rgba(255,233,168,.5);z-index:0}
 .bat{position:absolute;right:-6px;top:6px;width:46px;animation:bob 2.6s ease-in-out infinite}
 .bat path{transform-box:fill-box;transform-origin:center;animation:fl .35s ease-in-out infinite alternate}
 @keyframes bob{50%{transform:translate(-8px,10px)}}
 @keyframes fl{to{transform:scaleY(.6)}}
-#plane{position:fixed;left:0;top:20%;width:min(92vw,430px);z-index:6;pointer-events:none;opacity:0;transform:translateX(-120%)}
+#plane{position:absolute;left:0;top:20%;width:min(92vw,430px);pointer-events:none;opacity:0;transform:translateX(-120%)}
 #plane svg{width:100%;height:auto;display:block;filter:drop-shadow(0 14px 14px rgba(40,10,70,.35))}
 #plane.fly{animation:fly 3.2s cubic-bezier(.5,0,.8,.6) forwards}
 @keyframes fly{0%{opacity:1;transform:translate(-110%,70px) rotate(0)}30%{transform:translate(10vw,30px) rotate(-1deg)}100%{opacity:1;transform:translate(calc(100vw + 20%),-170px) rotate(-12deg)}}
-.pc{position:fixed;left:0;width:140px;height:44px;border-radius:40px;background:#fff;opacity:.8;pointer-events:none;transform-origin:left center;animation:pass 2.6s linear forwards}
+.pc{position:absolute;left:0;width:140px;height:44px;border-radius:40px;background:#fff;opacity:.8;pointer-events:none;transform-origin:left center;animation:pass 2.6s linear forwards}
 .pc::before,.pc::after{content:'';position:absolute;background:#fff;border-radius:50%}
 .pc::before{width:60px;height:60px;left:20px;top:-30px}.pc::after{width:46px;height:46px;left:72px;top:-20px}
 @keyframes pass{from{transform:translateX(105vw) scale(var(--s))}to{transform:translateX(-80vw) scale(var(--s))}}
 #over{position:fixed;inset:0;z-index:5;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(58,34,88,.9)}
 #over.show{display:flex;animation:fade .7s}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.pass{width:min(92vw,350px);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;box-shadow:0 14px 40px rgba(40,90,130,.3);animation:up .8s ease-out}
+.pass{overscroll-behavior:contain;width:min(92vw,350px);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;box-shadow:0 14px 40px rgba(40,90,130,.3);animation:up .8s ease-out}
 @keyframes up{from{transform:translateY(60px) scale(.9);opacity:0}to{transform:none;opacity:1}}
 .ph{display:flex;justify-content:space-between;align-items:center;background:#5b3a8c;color:#fff;padding:12px 18px;border-radius:20px 20px 0 0;font-weight:600;letter-spacing:.06em}
 .row{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 6px}
@@ -65,7 +66,7 @@ h1{margin:0;font-size:1.4rem;font-weight:600;text-align:center;color:#fff;text-s
 .bar{height:40px;margin:2px 18px 12px;background:repeating-linear-gradient(90deg,#4a3328 0 2px,#fff 2px 5px,#4a3328 5px 6px,#fff 6px 10px,#4a3328 10px 13px,#fff 13px 15px)}
 .pass button{display:block;margin:0 auto 16px;border:0;border-radius:20px;padding:8px 18px;background:#ffe9a8;color:var(--ink);font:600 .95rem 'Mali',sans-serif;cursor:pointer}
 #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
-.fl{position:fixed;bottom:-50px;z-index:31;pointer-events:none;animation:float 4s ease-out forwards}
+.fl{position:absolute;bottom:-50px;pointer-events:none;animation:float 4s ease-out forwards}
 @keyframes float{to{transform:translate(var(--dx),-108vh) rotate(25deg);opacity:0}}
 .sr{display:flex;justify-content:center;padding:2px 0 8px}
 .stamp{width:104px;height:104px;border:3px solid #c1263f;border-radius:50%;color:#c1263f;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:600;font-size:.6rem;letter-spacing:.1em;box-shadow:inset 0 0 0 3px #fff,inset 0 0 0 5px #c1263f;transform:rotate(-12deg) scale(2.6);opacity:0;animation:stamp .45s ease-in 1.2s forwards}
@@ -81,13 +82,13 @@ h1{margin:0;font-size:1.4rem;font-weight:600;text-align:center;color:#fff;text-s
 </style>
 </head>
 <body>
-<div class="cloud" style="top:8%;animation-duration:34s"></div>
+<div class="lay" style="z-index:0"><div class="cloud" style="top:8%;animation-duration:34s"></div>
 <div class="cloud" style="top:30%;animation-duration:26s;animation-delay:-12s;opacity:.22"></div>
-<div class="cloud" style="top:62%;animation-duration:40s;animation-delay:-20s;opacity:.26"></div>
+<div class="cloud" style="top:62%;animation-duration:40s;animation-delay:-20s;opacity:.26"></div><div class="moon"></div></div>
 <button id="snd" aria-label="เปิด/ปิดเพลง">🎵</button>
-<div class="moon"></div>
 <canvas id="fx"></canvas>
-<div id="plane"><svg viewBox="0 0 320 120" aria-hidden="true">
+<div class="lay" id="lb" style="z-index:5"></div><div class="lay" id="lf" style="z-index:7"></div><div class="lay" id="lfl" style="z-index:31"></div>
+<div class="lay" style="z-index:6"><div id="plane"><svg viewBox="0 0 320 120" aria-hidden="true">
   <path d="M36 44L12 6H54L92 42z" fill="#5b3a8c"/><path d="M22 14H46L40 24z" fill="#ff8a2a"/>
   <path d="M26 62Q26 42 70 40L240 40Q300 42 310 60Q300 80 240 82L70 82Q26 80 26 62z" fill="#fff"/>
   <path d="M30 70Q60 80 90 82L240 82Q290 80 306 66Q290 76 240 76L90 76Q50 76 30 70z" fill="#dcd3ea"/>
@@ -96,7 +97,7 @@ h1{margin:0;font-size:1.4rem;font-weight:600;text-align:center;color:#fff;text-s
   <g fill="#7fb7e6"><circle cx="86" cy="54" r="5"/><circle cx="112" cy="54" r="5"/><circle cx="138" cy="54" r="5"/><circle cx="164" cy="54" r="5"/><circle cx="190" cy="54" r="5"/><circle cx="216" cy="54" r="5"/></g>
   <path d="M126 76L204 76L162 112L118 112z" fill="#e8e1f3"/><ellipse cx="158" cy="94" rx="20" ry="8" fill="#cfc6e0"/><ellipse cx="178" cy="94" rx="5" ry="8" fill="#b9aed0"/>
   <circle cx="60" cy="56" r="0"/><text x="232" y="35" font-size="0"></text>
- </svg></div>
+ </svg></div></div>
 
 <h1>🎃 เก็บกระเป๋าก่อนไปนะ</h1>
 <div id="stage" role="button" aria-label="แตะเพื่อใส่ของลงกระเป๋า">
@@ -196,7 +197,7 @@ function fx(){
     var el = document.createElement("span"); el.className = "fl"; el.textContent = em[k % em.length];
     el.style.left = (Math.random() * 90) + "%"; el.style.fontSize = (1.4 + Math.random() * 1.2) + "rem";
     el.style.setProperty("--dx", ((Math.random() - .5) * 120) + "px"); el.style.animationDuration = (3 + Math.random() * 2.5) + "s"; el.style.animationDelay = (Math.random() * 1.6) + "s";
-    document.body.appendChild(el); setTimeout((function(n){ return function(){ n.remove(); }; })(el), 7500);
+    $("lfl").appendChild(el); setTimeout((function(n){ return function(){ n.remove(); }; })(el), 7500);
   }
 }
 var XS = [14, 62, 110, 158];
@@ -206,7 +207,7 @@ function clouds(){
     var c = document.createElement("div"); c.className = "pc";
     c.style.top = (4 + Math.random() * 82) + "%"; c.style.setProperty("--s", (.5 + Math.random() * .9).toFixed(2));
     c.style.animationDuration = (1.8 + Math.random() * 1.8).toFixed(1) + "s"; c.style.animationDelay = (Math.random() * .9).toFixed(1) + "s";
-    c.style.zIndex = i % 3 ? 5 : 7; document.body.appendChild(c);
+    $(i % 3 ? "lb" : "lf").appendChild(c);
     setTimeout((function(el){ return function(){ el.remove(); }; })(c), 5200);
   }
 }
@@ -220,7 +221,7 @@ $("stage").addEventListener("click", function(){
     setTimeout(function(){ $("plane").classList.add("fly"); clouds(); }, 2200);
     setTimeout(function(){
       $("dest").textContent = DEST; $("nm").textContent = NAME; $("dt").textContent = DATE;
-      $("msg").textContent = MESSAGE.replace("{name}", NAME); $("over").classList.add("show"); $("sd").textContent = DATE; fx();
+      $("msg").textContent = MESSAGE.replace("{name}", NAME); $("over").classList.add("show"); document.body.style.overflow = "hidden"; $("sd").textContent = DATE; fx();
     }, 5000);
   }
 });
