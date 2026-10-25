@@ -46,6 +46,7 @@ h1{margin:0;font-size:1.35rem;font-weight:600;text-align:center;color:#fff;text-
 @keyframes wave{50%{transform:rotate(2.5deg)}}
 .eyes{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
 @keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.rb{position:absolute;left:0;top:20px;width:100%;height:auto;pointer-events:none}.hb{position:absolute;font-size:1.3rem;animation:hbob 3s ease-in-out infinite;pointer-events:none}@keyframes hbob{50%{transform:translateY(-8px) scale(1.08)}}
 .arm{animation:armw 1.6s ease-in-out infinite}@keyframes armw{50%{transform:rotate(-16deg)}}
 .mini{display:block;margin:0 auto -2px}
 .bat{position:absolute;right:-6px;top:6px;width:44px;animation:bob 2.6s ease-in-out infinite}
@@ -132,12 +133,12 @@ h1{margin:0;font-size:1.35rem;font-weight:600;text-align:center;color:#fff;text-
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<linearGradient id="fur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9c6df"/><stop offset="1" stop-color="#c9aaf0"/></linearGradient>
+<linearGradient id="fur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4b0f2"/><stop offset="1" stop-color="#a47bd6"/></linearGradient>
 <symbol id="bh" viewBox="20 0 160 150">
  <circle cx="46" cy="32" r="21" fill="url(#fur)"/><circle cx="154" cy="32" r="21" fill="url(#fur)"/>
  <circle cx="46" cy="34" r="10" fill="#ffd9e8"/><circle cx="154" cy="34" r="10" fill="#ffd9e8"/>
  <circle cx="100" cy="82" r="62" fill="url(#fur)"/>
- <path d="M92 22Q88 6 102 8Q112 10 106 20Q104 14 98 15Q96 19 100 24z" fill="#c9aaf0"/>
+ <path d="M92 22Q88 6 102 8Q112 10 106 20Q104 14 98 15Q96 19 100 24z" fill="#a47bd6"/>
  <ellipse cx="100" cy="102" rx="27" ry="20" fill="#fff6e8"/>
  <ellipse cx="62" cy="100" rx="12" ry="8" fill="#ff9fbd" opacity=".6"/><ellipse cx="138" cy="100" rx="12" ry="8" fill="#ff9fbd" opacity=".6"/>
  <path d="M100 108C88 100 94 91 100 96C106 91 112 100 100 108z" fill="#d9577f"/>
@@ -161,9 +162,12 @@ h1{margin:0;font-size:1.35rem;font-weight:600;text-align:center;color:#fff;text-
 <main class="scene" id="s2"><div class="in">
  <h1>🎃 เก็บกระเป๋าก่อนไปนะ</h1>
  <div id="stage" role="button" tabindex="0" aria-label="แตะที่กระเป๋าเพื่อใส่ของ">
+  <svg class="rb" viewBox="0 0 300 150" aria-hidden="true"><g fill="none" stroke-width="10" opacity=".85"><path d="M10 150A140 140 0 0 1 290 150" stroke="#ff9fbd"/><path d="M22 150A128 128 0 0 1 278 150" stroke="#ffc58a"/><path d="M34 150A116 116 0 0 1 266 150" stroke="#fff0a0"/><path d="M46 150A104 104 0 0 1 254 150" stroke="#b9f0c8"/><path d="M58 150A92 92 0 0 1 242 150" stroke="#a9dcff"/><path d="M70 150A80 80 0 0 1 230 150" stroke="#cdb8f0"/></g></svg>
+  <span class="hb" style="left:2%;top:70px">🩷</span><span class="hb" style="right:4%;top:40px;animation-delay:-1s">🩷</span><span class="hb" style="left:12%;top:150px;animation-delay:-2s;font-size:.9rem">💗</span><span class="hb" style="right:8%;top:130px;animation-delay:-.5s;font-size:.9rem">💗</span>
   <svg id="bear" viewBox="0 0 200 230" aria-hidden="true">
    <ellipse cx="100" cy="180" rx="58" ry="52" fill="url(#fur)"/><ellipse cx="100" cy="184" rx="40" ry="38" fill="#fff6e8" opacity=".85"/>
-   <path d="M100 198C72 178 84 160 100 172C116 160 128 178 100 198z" fill="#ff8fb3"/><path d="M90 178L110 171L97 183L98 190z" fill="#fff"/>
+   <g fill="none" stroke-linecap="round" stroke-width="4.5"><path d="M78 196A22 22 0 0 1 122 196" stroke="#ff9fbd"/><path d="M85 196A15 15 0 0 1 115 196" stroke="#ffd36b"/><path d="M92 196A8 8 0 0 1 108 196" stroke="#8fd3ff"/></g>
+   <path d="M100 172C92 166 95 160 100 163C105 160 108 166 100 172z" fill="#ff8fb3"/>
    <ellipse cx="46" cy="188" rx="12" ry="27" fill="url(#fur)" transform="rotate(-14 46 188)"/>
    <g class="arm" style="transform-origin:142px 150px"><ellipse cx="158" cy="128" rx="12" ry="30" fill="url(#fur)" transform="rotate(30 158 128)"/><circle cx="170" cy="102" r="9" fill="#ffd9e8"/></g>
    <use href="#bh" x="20" y="0" width="160" height="150"/>
