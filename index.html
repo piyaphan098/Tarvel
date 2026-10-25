@@ -51,7 +51,7 @@ h1{margin:0;font-size:1.4rem;font-weight:600;text-align:center;color:#fff;text-s
 #over{position:fixed;inset:0;z-index:5;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(58,34,88,.9)}
 #over.show{display:flex;animation:fade .7s}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.pass{overscroll-behavior:contain;width:min(92vw,350px);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;box-shadow:0 14px 40px rgba(40,90,130,.3);animation:up .8s ease-out}
+.pass{overscroll-behavior:contain;width:min(92vw,350px);max-height:92vh;overflow-x:hidden;overflow-y:auto;touch-action:pan-y;background:#fff;border-radius:20px;box-shadow:0 14px 40px rgba(40,90,130,.3);animation:up .8s ease-out}
 @keyframes up{from{transform:translateY(60px) scale(.9);opacity:0}to{transform:none;opacity:1}}
 .ph{display:flex;justify-content:space-between;align-items:center;background:#5b3a8c;color:#fff;padding:12px 18px;border-radius:20px 20px 0 0;font-weight:600;letter-spacing:.06em}
 .row{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 6px}
@@ -225,6 +225,7 @@ $("stage").addEventListener("click", function(){
     }, 5000);
   }
 });
+document.querySelector(".pass").addEventListener("scroll", function(){ if (this.scrollLeft) this.scrollLeft = 0; });
 $("again").addEventListener("click", function(){ location.reload(); });
 </script>
 </body>
