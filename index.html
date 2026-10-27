@@ -79,16 +79,23 @@ h1{margin:0;font-size:1.35rem;font-weight:600;text-align:center;color:#fff;text-
 #prog i{position:relative;width:26px;height:32px;background:rgba(255,255,255,.28);clip-path:polygon(18% 0,82% 0,100% 22%,100% 100%,0 100%,0 22%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px;transition:.3s}#prog i::before{content:"";position:absolute;top:5px;left:50%;margin-left:-3px;width:6px;height:6px;border-radius:50%;background:#5a4585;opacity:.5}
 #prog i.on{background:var(--cream)}#prog i.on::before{background:var(--gold);opacity:1}#prog i svg{width:18px;height:18px}
 #cap{min-height:3.2em}
-/* Scene 3: plane */
-#pl{position:relative;width:100%;height:60vh;min-height:260px}
-#pl svg.plane{position:absolute;left:0;top:30%;width:min(92vw,430px);opacity:0;filter:drop-shadow(0 14px 14px rgba(40,10,70,.35))}
-#pl.fly svg.plane{animation:fly 3.4s cubic-bezier(.5,0,.8,.6) forwards}
-@keyframes fly{0%{opacity:1;transform:translate(-110%,60px)}30%{transform:translate(10vw,20px)}100%{opacity:1;transform:translate(calc(100vw + 20%),-170px) rotate(-12deg)}}
-#pl svg.trail{position:absolute;inset:0;width:100%;height:100%}
-#pl .dash{fill:none;stroke:#fff;stroke-width:2.5;stroke-dasharray:6 8;stroke-linecap:round;opacity:.8;stroke-dashoffset:0}
+/* Scene 4: paper-cut sky, dusk to dawn */
+#s3 .in{position:relative;z-index:1}
+.dawn{position:fixed;inset:0;opacity:0;pointer-events:none;background:radial-gradient(circle at 72% 88%,#fff3c4 0,#ffd9a0 12%,transparent 38%),linear-gradient(#cda9e6,#f6b6c8 55%,#ffd0b0)}
+#s3.on .dawn{animation:dawn 3.6s ease-in forwards}
+@keyframes dawn{to{opacity:.9}}
+#pl{position:relative;width:100%;height:60vh;min-height:280px}
+#pl svg.trail{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+#pg{opacity:0}
+#pl .dash{fill:none;stroke:#fff;stroke-width:3.5;stroke-dasharray:7 12;stroke-linecap:round;opacity:.85}
+.cb{position:absolute;left:0;width:calc(100vw + 1300px);background-repeat:repeat-x;pointer-events:none;z-index:2;animation:cm linear infinite}
+.cb.a{bottom:56px;height:54px;background-size:90px 54px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Cg fill='%23cdb8f0'%3E%3Ccircle cx='28' cy='38' r='24'/%3E%3Ccircle cx='72' cy='44' r='19'/%3E%3Crect y='44' width='100' height='16'/%3E%3C/g%3E%3C/svg%3E");opacity:.65;--d:720px;animation-duration:36s}
+.cb.b{bottom:26px;height:72px;background-size:120px 72px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Cg fill='%23f2b6cb'%3E%3Ccircle cx='28' cy='38' r='24'/%3E%3Ccircle cx='72' cy='44' r='19'/%3E%3Crect y='44' width='100' height='16'/%3E%3C/g%3E%3C/svg%3E");opacity:.92;--d:960px;animation-duration:24s}
+.cb.c{bottom:0;height:96px;background-size:160px 96px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Cg fill='%23fff6e8'%3E%3Ccircle cx='28' cy='38' r='24'/%3E%3Ccircle cx='72' cy='44' r='19'/%3E%3Crect y='44' width='100' height='16'/%3E%3C/g%3E%3C/svg%3E");--d:1280px;animation-duration:14s}
+@keyframes cm{to{transform:translateX(calc(-1*var(--d)))}}
+.tw{animation:tw 2.4s ease-in-out infinite}
 /* Scene 4: pass etc. */
 .card{width:min(92vw,360px);background:var(--cream);border-radius:20px;box-shadow:0 14px 40px rgba(30,10,60,.45);overflow:hidden;position:relative}
-.s4.play .card.bp{animation:up .8s ease-out}
 @keyframes up{from{transform:translateY(60px) scale(.92);opacity:0}to{transform:none;opacity:1}}
 .ph{display:flex;justify-content:space-between;align-items:center;background:var(--deep);color:#ffe9a8;padding:12px 18px;font-weight:800;letter-spacing:.08em;font-family:'Nunito',sans-serif}
 .row{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 6px;gap:8px}
@@ -147,7 +154,73 @@ h1{font-size:1.6rem}
 .front .st{position:absolute;inset:8px 8px 10px;border:2px dashed rgba(255,246,232,.55);border-radius:6px}
 .lid{background:linear-gradient(#f9a9c1,#ee86a3)}
 .corner{position:absolute;bottom:0;width:20px;height:20px;background:linear-gradient(135deg,#ffe9a8,var(--gold));z-index:2}
-@media (min-width:700px){.jp{grid-template-columns:repeat(4,1fr)}.card{width:min(92vw,520px)}.lt{width:min(92vw,520px)}}
+/* Scene 5: collectible boarding pass (die-cut notches via mask) */
+.s4.play .bp{animation:up .8s ease-out,thump .35s ease-in 1.3s}
+@keyframes thump{35%{transform:translateY(3px) rotate(-.5deg)}70%{transform:translateY(-1px) rotate(.2deg)}}
+.bp{width:min(92vw,360px);position:relative;filter:drop-shadow(0 14px 16px rgba(30,10,60,.45))}
+.bp-main,.bp-stub{background:radial-gradient(circle,rgba(170,140,100,.13) 1px,transparent 1.5px) 0 0/9px 9px,var(--cream)}
+.bp-main{border-radius:20px 20px 0 0;overflow:hidden;-webkit-mask:radial-gradient(circle 12px at 0 100%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 100%,#0000 97%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 12px at 0 100%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 100%,#0000 97%,#000) right/51% 100% no-repeat}
+.bp-stub{position:relative;border-radius:0 0 20px 20px;background-color:#fff0f2;-webkit-mask:radial-gradient(circle 12px at 0 0,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 0,#0000 97%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 12px at 0 0,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 0,#0000 97%,#000) right/51% 100% no-repeat}
+.bp-stub::before{content:"";position:absolute;left:16px;right:16px;top:0;border-top:2px dashed #cdb8f0}
+.stk{position:absolute;bottom:-18px;right:10px;z-index:3;transform:rotate(9deg);filter:drop-shadow(0 3px 4px rgba(30,10,60,.35))}
+.ph{background:linear-gradient(135deg,#4a3578,#3b2a63);justify-content:flex-start;gap:12px}
+#s4{padding-top:max(66px,calc(env(safe-area-inset-top,0px) + 56px))}
+.foil{background:linear-gradient(110deg,#b8892b,#f6dc92 35%,#c9a040 55%,#f1d27b);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 0 rgba(0,0,0,.35))}
+.rt{display:flex;align-items:flex-end;gap:8px;padding:18px 18px 8px}
+.rt b{display:block;font:800 1.35rem/1.1 'Nunito',sans-serif;color:var(--deep)}
+.rt small{display:block;font:700 .64rem 'Nunito',sans-serif;color:var(--mute);letter-spacing:.08em}
+.rt .to{text-align:right;flex:1;min-width:0}.rt .to b{font-size:2.2rem;overflow-wrap:anywhere}
+.pln{flex:0 0 64px;align-self:center;margin-top:10px}
+.bp-stub .stamps{padding-top:10px}
+/* Scene 6: letter, luggage tags, closing */
+.lt>button{background:none;box-shadow:none;padding:0;border-radius:0;flex-direction:column;align-items:center;gap:14px;justify-content:center}
+.ev{position:relative;isolation:isolate;display:block;flex:none;width:220px;height:124px;perspective:600px;transform:rotate(-2deg);margin-top:40px}
+.ev>span{position:absolute}
+.e-bk{inset:30px 0 0;border-radius:10px;background:radial-gradient(circle,rgba(255,255,255,.35) 1.5px,transparent 2px) 0 0/12px 12px,#b79be0;box-shadow:0 10px 20px rgba(30,10,60,.4)}
+.e-ft{inset:30px 0 0;border-radius:10px;background:linear-gradient(135deg,#fbd5e0,#f2b0c6);clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%)}
+.e-fl{left:0;right:0;top:30px;height:66px;background:linear-gradient(#f6b1c7,#e98fae);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;z-index:3;transition:transform .6s,z-index 0s .3s,background .3s .25s}
+.e-hs{position:absolute;left:50%;top:78px;margin-left:-17px;z-index:4;filter:drop-shadow(0 2px 2px rgba(60,30,10,.4));transition:opacity .3s}
+.lt>button[aria-expanded=true] .e-fl{transform:rotateX(180deg);z-index:-1;background:#a98ad8}
+.lt>button[aria-expanded=true] .e-hs{opacity:0}
+.lb{background:var(--cream);color:var(--ink);padding:8px 20px;border-radius:999px;font:600 .95rem 'Mali','Nunito',sans-serif;box-shadow:0 6px 14px rgba(30,10,60,.3)}
+.paper .in2{position:relative;margin-top:20px}
+.paper .in2::before{content:"";position:absolute;top:-9px;left:50%;width:96px;height:22px;margin-left:-48px;transform:rotate(-3deg);background:repeating-linear-gradient(45deg,rgba(247,168,192,.85) 0 6px,rgba(255,246,232,.85) 6px 12px);box-shadow:0 1px 3px #0003}
+.flw{display:block;margin:12px auto 0}
+.tags{width:min(92vw,360px)}
+.tags .ph2{color:#fff;text-shadow:0 1px 6px rgba(40,15,70,.55)}.tags .ph2 small{color:rgba(255,255,255,.85)}
+.tags .jp{padding:20px 0 6px;gap:20px 14px;filter:drop-shadow(0 6px 6px rgba(30,10,60,.35))}
+.tags .jc{position:relative;border:0;padding:30px 8px 12px;background:#fff6e8;clip-path:polygon(16% 0,84% 0,100% 18%,100% 100%,0 100%,0 18%);transition:background .2s}
+.tags .jc::before{content:"";position:absolute;top:9px;left:50%;margin-left:-7px;width:14px;height:14px;border-radius:50%;border:2.5px solid #d9b55f;background:#5a4585}
+.tags .jc:nth-child(2){background:#fde0e8;transform:rotate(1.6deg)}.tags .jc:nth-child(1){transform:rotate(-1.6deg)}.tags .jc:nth-child(3){background:#ece2fa;transform:rotate(1.2deg)}.tags .jc:nth-child(4){background:#ffe6d0;transform:rotate(-1.2deg)}
+.tags .jc.say,.tags .jc:active{background:#fff;}
+#note{color:#fff;text-shadow:0 1px 4px rgba(40,15,70,.6)}
+.fin{display:flex;flex-direction:column;align-items:center;gap:10px;width:min(92vw,360px);text-align:center;color:#fff;text-shadow:0 1px 6px rgba(40,15,70,.5)}
+.fin .e1{font:800 1.15rem/1.35 'Nunito',sans-serif}.fin p{margin:0;line-height:1.7}.fin .btn{margin:6px 0 10px;text-shadow:none}
+.win{filter:drop-shadow(0 10px 12px rgba(30,10,60,.4))}.win .wv{animation:wv 1.4s ease-in-out infinite}
+@keyframes wv{50%{transform:rotate(-16deg)}}
+/* Scene 6: letter, luggage-tag phrases, postcard finale */
+.lt>button{position:relative;overflow:hidden;background:linear-gradient(160deg,#fbd5e0,#f2b0c6);padding:18px 18px 16px;gap:12px}
+.lt>button::before{content:"";position:absolute;inset:0;background:linear-gradient(#fff6,#fff1);clip-path:polygon(0 0,100% 0,50% 72%);pointer-events:none}
+.lt>button>*{position:relative}
+.lt>button .sl{flex:0 0 auto;filter:drop-shadow(0 2px 2px rgba(60,30,10,.35));transition:transform .4s}
+.lt>button[aria-expanded=true] .sl{transform:rotate(-14deg) scale(1.12)}
+.paper>div{padding-top:12px}
+.paper .in2{position:relative;margin-top:0;padding:24px 20px 20px}
+.paper .in2::before{content:"";position:absolute;top:-10px;left:50%;margin-left:-44px;width:88px;height:22px;transform:rotate(-3deg);background:repeating-linear-gradient(45deg,rgba(205,184,240,.85) 0 6px,rgba(255,255,255,.55) 6px 12px);box-shadow:0 1px 2px #0002}
+.in2 .fw{display:block;margin:8px 0 0 auto;transform:rotate(8deg)}
+.tg{width:min(92vw,360px);border-radius:20px;padding:6px 4px 8px;background:rgba(59,42,99,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 10px 26px rgba(30,10,60,.35)}
+.tg .ph2{color:#fff}.tg .ph2 small{color:#e8dcff}
+.tg #note{color:#ffd0dd}
+.jp{filter:drop-shadow(0 4px 4px rgba(30,10,60,.3))}
+.jc{position:relative;border:0;border-radius:0;padding:28px 6px 12px;background:var(--tc,#fbd5e0);transform-origin:50% 0;animation:sway 4.5s ease-in-out infinite;clip-path:polygon(16% 0,84% 0,100% 14%,100% 100%,0 100%,0 14%);-webkit-mask:radial-gradient(circle 5px at 50% 14px,#0000 96%,#000);mask:radial-gradient(circle 5px at 50% 14px,#0000 96%,#000)}
+.jc:nth-child(2){--tc:#e3d4fa;animation-delay:-1.2s}.jc:nth-child(3){--tc:#ffe3cc;animation-delay:-2.4s}.jc:nth-child(4){--tc:#fff6e8;animation-delay:-3.4s}
+.jc:active,.jc.say{background:var(--tc);filter:brightness(.92)}
+@keyframes sway{50%{transform:rotate(1.6deg)}}
+.pc{padding-top:18px;text-align:center}
+.pc .win{display:block;margin:0 auto 4px}
+.pc .e1{font:800 1.05rem 'Nunito',sans-serif;color:var(--deep);padding:0 18px}
+.pc p{margin:6px 0 8px;line-height:1.7;padding:0 18px}
+@media (min-width:700px){.jp{grid-template-columns:repeat(4,1fr)}.card,.bp,.tg{width:min(92vw,520px)}.lt{width:min(92vw,520px)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.s4 .stamp{opacity:.85!important;transform:rotate(-12deg)!important}.s4 .stamp.g{transform:rotate(9deg)!important}}
 </style>
 </head>
@@ -171,6 +244,14 @@ h1{font-size:1.6rem}
 <symbol id="ic-pum" viewBox="0 0 48 48"><ellipse cx="24" cy="29" rx="20" ry="15" fill="#ff9a5a"/><ellipse cx="24" cy="29" rx="10" ry="15" fill="#ffb27d"/><path d="M22 15q0-9 7-9l1 3q-4 0-4 6z" fill="#7fb98a"/><circle cx="16" cy="28" r="2.2" fill="#5b3a8c"/><circle cx="32" cy="28" r="2.2" fill="#5b3a8c"/><path d="M19 34q5 4 10 0" stroke="#5b3a8c" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
 <symbol id="ic-clo" viewBox="0 0 48 48"><path d="M24 28q2 10 8 16" stroke="#6fb284" stroke-width="3" fill="none" stroke-linecap="round"/><g fill="#9fd8b0"><circle cx="18" cy="17" r="9"/><circle cx="30" cy="17" r="9"/><circle cx="18" cy="29" r="9"/><circle cx="30" cy="29" r="9"/></g><g fill="#c8efd3"><circle cx="15" cy="14" r="3"/><circle cx="27" cy="14" r="3"/><circle cx="15" cy="26" r="3"/><circle cx="27" cy="26" r="3"/></g></symbol>
 <symbol id="ic-hrt" viewBox="0 0 24 22"><path d="M12 21C2 13 2 4 8 3c3 0 4 2 4 3 0-1 1-3 4-3 6 1 6 10-4 18z" fill="#ff8fb3"/><ellipse cx="8" cy="7" rx="2.2" ry="1.4" fill="#fff" opacity=".55" transform="rotate(-30 8 7)"/></symbol>
+<pattern id="sc1" width="100" height="60" patternUnits="userSpaceOnUse"><g fill="#cdb8f0"><circle cx="28" cy="38" r="24"/><circle cx="72" cy="44" r="19"/><rect y="44" width="100" height="16"/></g></pattern>
+<pattern id="sc2" width="100" height="60" patternUnits="userSpaceOnUse"><g fill="#f2b6cb"><circle cx="34" cy="38" r="22"/><circle cx="78" cy="44" r="17"/><rect y="44" width="100" height="16"/></g></pattern>
+<pattern id="sc3" width="100" height="60" patternUnits="userSpaceOnUse"><g fill="#fff6e8"><circle cx="24" cy="38" r="26"/><circle cx="68" cy="44" r="21"/><rect y="44" width="100" height="16"/></g></pattern>
+<symbol id="ic-pln" viewBox="0 0 48 24"><path d="M2 12L14 8L30 8L39 2L44 2L38 9L46 12L38 15L44 22L39 22L30 16L14 16z" fill="currentColor"/></symbol>
+<symbol id="ic-spk" viewBox="0 0 24 24"><path d="M12 1Q12 12 23 12Q12 12 12 23Q12 12 1 12Q12 12 12 1z" fill="#f6c453"/></symbol>
+<linearGradient id="skyw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a98ad8"/><stop offset=".6" stop-color="#f6b6c8"/><stop offset="1" stop-color="#ffd0b0"/></linearGradient>
+<symbol id="ic-seal" viewBox="0 0 44 44"><path d="M22 2c6 0 8 3 13 5s7 8 7 14-3 8-6 13-9 8-14 8-9-3-13-7S2 27 2 22 5 11 9 8s7-6 13-6z" fill="url(#wax)"/><circle cx="22" cy="22" r="14" fill="none" stroke="#a97a22" stroke-opacity=".5" stroke-width="1.5"/><path d="M22 31C14 25 14 17 18 16c3 0 4 2 4 3 0-1 1-3 4-3 4 1 4 9-4 15z" fill="#a97a22" opacity=".85" transform="translate(.8 .6)"/><path d="M22 31C14 25 14 17 18 16c3 0 4 2 4 3 0-1 1-3 4-3 4 1 4 9-4 15z" fill="#f0d27a"/></symbol>
+<linearGradient id="wsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cda9e6"/><stop offset="1" stop-color="#ffd0b0"/></linearGradient>
 </defs></svg>
 <div id="sky" aria-hidden="true"><div class="moon"></div>
 <div class="cloud" style="top:12%;animation-duration:44s"></div><div class="cloud" style="top:38%;animation-duration:34s;animation-delay:-14s;opacity:.7"></div><div class="cloud" style="top:66%;animation-duration:50s;animation-delay:-26s;opacity:.6"></div></div>
@@ -210,38 +291,55 @@ h1{font-size:1.6rem}
 </div></main>
 
 <!-- Scene 3: plane -->
-<main class="scene" id="s3" aria-hidden="true"><div class="in"><div id="pl">
- <svg class="trail" viewBox="0 0 400 300" preserveAspectRatio="none"><path class="dash" d="M-10 250Q120 230 200 150T420 20"/></svg>
- <svg class="plane" viewBox="0 0 320 120">
-  <path d="M36 44L12 6H54L92 42z" fill="#8a6bc0"/><path d="M22 14H46L40 24z" fill="#f7a27a"/>
-  <path d="M26 62Q26 42 70 40L240 40Q300 42 310 60Q300 80 240 82L70 82Q26 80 26 62z" fill="#fff6e8"/>
-  <path d="M30 70Q60 80 90 82L240 82Q290 80 306 66Q290 76 240 76L90 76Q50 76 30 70z" fill="#dcd3ea"/>
-  <rect x="44" y="62" width="236" height="6" fill="#f7a8c0"/><path d="M262 48Q290 48 303 58L266 58z" fill="#9fc6ec"/>
-  <g fill="#9fc6ec"><circle cx="86" cy="54" r="5"/><circle cx="112" cy="54" r="5"/><circle cx="138" cy="54" r="5"/><circle cx="164" cy="54" r="5"/><circle cx="190" cy="54" r="5"/><circle cx="216" cy="54" r="5"/></g>
-  <path d="M126 76L204 76L162 112L118 112z" fill="#e8e1f3"/><ellipse cx="158" cy="94" rx="20" ry="8" fill="#cfc6e0"/>
- </svg></div></div></main>
+<main class="scene" id="s3" aria-hidden="true"><div class="dawn"></div><div class="in"><div id="pl">
+ <svg class="trail" id="trail" aria-hidden="true">
+  <defs><mask id="rv" maskUnits="userSpaceOnUse" x="-100" y="-100" width="700" height="500"><path id="mk" d="M-50 240C80 250 150 190 210 150S340 60 450 20" pathLength="1" fill="none" stroke="#fff" stroke-width="30" stroke-dasharray="1" stroke-dashoffset="1"/></mask></defs>
+  <path class="dash" id="fp" d="M-50 240C80 250 150 190 210 150S340 60 450 20" mask="url(#rv)"/>
+  <g id="pg"><path d="M-58 -6L-72 -36L-48 -36L-34 -8z" fill="#a98ad8"/><use href="#ic-hrt" x="-64" y="-32" width="10" height="9"/>
+ <path d="M-8 -8L-30 -30L-12 -30L24 -8z" fill="#8f6fc4"/>
+ <path d="M-62 -4Q-62 -16 -40 -16L40 -16Q66 -14 70 0Q66 14 40 14L-40 14Q-62 12 -62 -4z" fill="#fff6e8"/>
+ <path d="M-58 6Q-20 14 40 14Q62 12 68 4Q50 9 40 9L-40 9z" fill="#e6dcf0"/>
+ <rect x="-56" y="3" width="118" height="4" rx="2" fill="#f7a8c0"/><path d="M56 -14Q70 -10 70 0L56 0z" fill="#f7a8c0"/><path d="M46 -12Q58 -12 62 -4L46 -4z" fill="#9fc6ec"/>
+ <g fill="#ffe9a8"><circle cx="-40" cy="-6" r="4.5"/><circle cx="-20" cy="-6" r="4.5"/><circle cx="0" cy="-6" r="4.5"/><circle cx="20" cy="-5" r="8.5"/></g>
+ <use href="#bh" x="11" y="-14" width="18" height="17"/>
+ <path d="M-6 8L-32 36L-10 36L26 8z" fill="#cdb8f0"/><path d="M-6 8L-32 36L-25 36L2 8z" fill="#fff" opacity=".28"/></g>
+ </svg></div></div>
+ <div class="cb a" aria-hidden="true"></div>
+ <div class="cb b" aria-hidden="true"></div>
+ <div class="cb c" aria-hidden="true"></div></main>
 
 <!-- Scenes 4-7: boarding pass, letter, phrases, closing -->
 <main class="scene s4" id="s4"><div class="in">
- <section class="card bp" aria-label="Boarding pass">
-  <div class="ph"><span>BOARDING PASS</span><span>✈</span></div>
-  <div class="row"><div><small>FROM</small><b>HOME</b></div><div style="font-size:1.8rem">✈️</div><div style="text-align:right"><small>TO</small><b id="dest"></b></div></div>
-  <div class="meta"><div><small>PASSENGER</small><span id="nm"></span></div><div><small>FLIGHT</small>HAPPY TRIP</div><div><small>DATE</small><span id="dt"></span></div><div><small>SEAT</small>ริมหน้าต่าง</div></div>
-  <div class="tear"></div>
-  <div class="wish"><div class="jpn">いってらっしゃい</div><p>HAVE A LOVELY JOURNEY</p></div>
-  <div class="stamps"><div class="stamp"><span>ARRIVED</span><b id="sd"></b><span id="sdt"></span></div><div class="stamp g"><span>MADE</span><b>WITH LOVE</b><span>♡</span></div></div>
-  <div class="bar"></div>
+ <section class="bp" aria-label="Boarding pass">
+  <svg class="stk" width="66" height="62" viewBox="-8 -6 176 168" aria-hidden="true"><circle cx="80" cy="78" r="84" fill="#fff"/><use href="#bh" width="160" height="150"/></svg>
+  <div class="bp-main">
+   <div class="ph"><span class="foil">BOARDING PASS</span><svg width="34" height="17" aria-hidden="true" style="color:#e8c46a"><use href="#ic-pln"/></svg></div>
+   <div class="rt"><div><small>FROM</small><b>HOME</b></div><svg class="pln" viewBox="0 0 80 30" aria-hidden="true"><path d="M2 26Q40 -6 74 12" fill="none" stroke="#cdb8f0" stroke-width="2" stroke-dasharray="3 5" stroke-linecap="round"/><use href="#ic-pln" x="54" y="2" width="26" height="13" style="color:#8a6bc0"/></svg><div class="to"><small>TO</small><b id="dest"></b></div></div>
+   <div class="meta"><div><small>PASSENGER</small><span id="nm"></span></div><div><small>FLIGHT</small>HAPPY TRIP</div><div><small>DATE</small><span id="dt"></span></div><div><small>SEAT</small>ริมหน้าต่าง</div></div>
+  </div>
+  <div class="bp-stub">
+   <div class="wish"><div class="jpn">いってらっしゃい</div><p>HAVE A LOVELY JOURNEY</p></div>
+   <div class="stamps"><div class="stamp"><span>ARRIVED</span><b id="sd"></b><span id="sdt"></span></div><div class="stamp g"><span>MADE</span><b>WITH LOVE</b><span>♡</span></div></div>
+   <div class="bar"></div>
+  </div>
  </section>
 
  <section class="lt" aria-label="จดหมายถึงเธอ">
-  <button type="button" id="lbtn" aria-expanded="false" aria-controls="paper"><span class="ic">💌</span><span>แตะเพื่ออ่านจดหมายถึงเธอ</span></button>
-  <div class="paper" id="paper"><div><div class="in2"><span id="msg"></span><span class="orn" aria-hidden="true">♡ ✿ ♡</span></div></div></div>
+  <button type="button" id="lbtn" aria-expanded="false" aria-controls="paper"><svg class="sl" width="38" height="38" aria-hidden="true"><use href="#ic-seal"/></svg><span>แตะเพื่ออ่านจดหมายถึงเธอ</span></button>
+  <div class="paper" id="paper"><div><div class="in2"><span id="msg"></span><svg class="fw" width="54" height="64" viewBox="0 0 54 64" aria-hidden="true"><path d="M27 30Q29 48 40 62" stroke="#6fb284" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M30 46Q42 40 46 48Q38 52 30 46z" fill="#9fd8b0"/><g fill="#f7a8c0"><circle cx="27" cy="12" r="9"/><circle cx="40" cy="20" r="9"/><circle cx="35" cy="34" r="9"/><circle cx="19" cy="34" r="9"/><circle cx="14" cy="20" r="9"/></g><circle cx="27" cy="25" r="6" fill="#f0d27a"/></svg><span class="orn" aria-hidden="true">♡ ✿ ♡</span></div></div></div>
  </section>
 
- <section class="card" aria-label="คำญี่ปุ่นติดตัวไปใช้">
-  <div class="ph2">🗣️ คำญี่ปุ่นติดตัวไปใช้<small>แตะเพื่อฟังเสียง (ถ้าเบราว์เซอร์รองรับ)</small></div>
+ <section class="tg" aria-label="คำญี่ปุ่นติดตัวไปใช้">
+  <div class="ph2"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="vertical-align:-4px"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="#ffd0dd"/></svg> คำญี่ปุ่นติดตัวไปใช้<small>แตะป้ายเพื่อฟังเสียง (ถ้าเบราว์เซอร์รองรับ)</small></div>
   <div class="jp" id="jp"></div><div id="note" role="status" aria-live="polite"></div>
-  <div class="end"><svg class="mini" width="76" height="71" viewBox="0 0 160 150" aria-hidden="true"><use href="#bh"/></svg><div class="e1 en">Take lots of lovely memories with you.</div><p>ขอให้ทุกวันของทริปนี้เต็มไปด้วยรอยยิ้มนะ 🤍</p></div>
+ </section>
+
+ <section class="card pc" aria-label="ขอให้เดินทางปลอดภัย">
+  <svg class="win" width="118" height="124" viewBox="0 0 120 124" aria-hidden="true"><defs><clipPath id="wc"><rect x="14" y="12" width="92" height="100" rx="40"/></clipPath></defs>
+   <rect x="4" y="4" width="112" height="116" rx="50" fill="#fff6e8" stroke="#d9b55f" stroke-width="3"/><g clip-path="url(#wc)"><rect x="14" y="12" width="92" height="100" fill="url(#wsky)"/><circle cx="30" cy="104" r="20" fill="#fff" opacity=".85"/><circle cx="62" cy="108" r="22" fill="#fff"/><circle cx="96" cy="104" r="18" fill="#fff" opacity=".85"/>
+   <use href="#bh" x="22" y="38" width="70" height="66"/><g class="arm" style="transform-origin:92px 84px"><ellipse cx="92" cy="72" rx="7" ry="15" fill="url(#fur)" transform="rotate(20 92 72)"/><circle cx="96" cy="55" r="8.5" fill="url(#fur)"/><circle cx="96" cy="56" r="3.5" fill="#ffd9e8"/></g></g>
+   <rect x="14" y="12" width="92" height="100" rx="40" fill="none" stroke="#e6dcf0" stroke-width="3"/></svg>
+  <div class="e1 en">Take lots of lovely memories with you.</div><p>ขอให้ทุกวันของทริปนี้เต็มไปด้วยรอยยิ้มนะ <svg width="18" height="16" viewBox="0 0 24 22" aria-hidden="true" style="vertical-align:-2px"><use href="#ic-hrt"/></svg></p>
   <button class="btn" id="again" type="button">ดูอีกครั้ง</button>
  </section>
 </div></main>
@@ -299,17 +397,42 @@ function setMusic(on){
 }
 $("snd").addEventListener("click", function(){ setMusic(!musicOn); });
 
-/* ---- Floating hearts / sparkles ---- */
+/* ---- Floating hearts / sparkles (SVG icons, no emoji) ---- */
 function floaters(list, count){
-  if (RM) return; var box = $("fl");
+  if (RM) return; var box = $("fl"), NS = "http://www.w3.org/2000/svg", F = ["", "hue-rotate(-65deg)", "saturate(.2) brightness(1.5)"];
   for (var k = 0; k < count; k++) {
-    var el = document.createElement("span"); el.className = "fe"; el.textContent = list[k % list.length];
-    el.style.left = (Math.random()*90) + "%"; el.style.fontSize = (1.2 + Math.random()*1.1) + "rem";
+    var el = document.createElementNS(NS, "svg"), u = document.createElementNS(NS, "use"), sz = 18 + Math.random() * 18;
+    u.setAttribute("href", "#" + list[k % list.length]); el.appendChild(u); el.setAttribute("class", "fe"); el.setAttribute("width", sz); el.setAttribute("height", sz);
+    el.style.left = (Math.random()*90) + "%"; el.style.filter = list[k % list.length] === "ic-hrt" ? F[k % 3] : "";
     el.style.setProperty("--dx", ((Math.random() - .5) * 120) + "px"); el.style.animationDuration = (3.5 + Math.random()*2.5) + "s"; el.style.animationDelay = (Math.random()*1.4) + "s";
     box.appendChild(el); (function(e){ later(function(){ e.remove(); }, 8000); })(el);
   }
 }
-
+/* ---- Scene 3: plane follows the dashed path (rAF, cancelled on reset) ---- */
+var PS = 1;
+function layoutSky(){   /* build the flight path + mask in real screen pixels so nothing is stretched */
+  var W = innerWidth, H = innerHeight, f = function(a,b){ return (a*W).toFixed(0) + " " + (b*H).toFixed(0); };
+  var tall = H > W * 1.3, y2 = tall ? .62 : .5, y3 = tall ? .42 : .2, y4 = tall ? .32 : .05;   /* gentler climb on portrait phones */
+  var d = "M" + f(-.15,.8) + "C" + f(.2,.84) + "," + f(.38,.7) + "," + f(.52,y2) + "S" + f(.85,y3) + "," + f(1.15,y4);
+  $("trail").setAttribute("viewBox", "0 0 " + W + " " + H); $("fp").setAttribute("d", d); $("mk").setAttribute("d", d);
+  var m = $("mk").parentNode; m.setAttribute("x", -W); m.setAttribute("y", -H); m.setAttribute("width", 3*W); m.setAttribute("height", 3*H);
+  PS = Math.max(.75, Math.min(1.3, W * .32 / 140));
+}
+var raf = 0;
+function resetPlane(){ cancelAnimationFrame(raf); $("pg").style.opacity = 0; $("mk").style.strokeDashoffset = 1; }
+function fly(){
+  resetPlane(); layoutSky();
+  var path = $("fp"), len = path.getTotalLength(), pg = $("pg"), mk = $("mk"), t0 = null, D = RM ? 400 : 3500;
+  pg.style.opacity = 1;
+  function step(ts){
+    if (t0 === null) t0 = ts; var k = Math.min((ts - t0) / D, 1), e = k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2) / 2;
+    var p = path.getPointAtLength(e * len), q = path.getPointAtLength(Math.min(e * len + 2, len)), a = Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI;
+    pg.setAttribute("transform", "translate(" + p.x.toFixed(1) + " " + p.y.toFixed(1) + ") rotate(" + a.toFixed(1) + ") scale(" + PS.toFixed(2) + ")");
+    mk.style.strokeDashoffset = 1 - e;
+    if (k < 1) raf = requestAnimationFrame(step);
+  }
+  raf = requestAnimationFrame(step);
+}
 /* ---- Scene 1 ---- */
 $("open").addEventListener("click", function(){
   if (busy) return; busy = true; this.disabled = true;
@@ -327,7 +450,7 @@ function collect(){
   var tg = $("prog").children[n]; tg.classList.add("on"); icon(tg, ITEMS[n][0], 18); n++; $("pt").textContent = n + "/" + ITEMS.length;
   if (n < ITEMS.length) { later(function(){ busy = false; }, 800); return; }
   later(function(){ $("case").classList.add("closed"); $("cap").textContent = "ปิดกระเป๋า… พร้อมออกเดินทาง! ✈️"; ting(392); }, 1000);
-  later(function(){ go("s3"); var pl = $("pl"); pl.classList.remove("fly"); void pl.offsetWidth; pl.classList.add("fly"); floaters(["✨"], 6); }, 2400);
+  later(function(){ go("s3"); fly(); floaters(["ic-spk"], 6); }, 2400);
   later(function(){ showPass(); }, 6000);
 }
 $("stage").addEventListener("click", collect);
@@ -339,7 +462,7 @@ function showPass(){
   $("sd").textContent = DEST; $("sdt").textContent = DATE;
   $("msg").textContent = MESSAGE.split("{name}").join(NAME);
   go("s4"); var s = $("s4"); s.classList.remove("play"); void s.offsetWidth; s.classList.add("play");
-  later(function(){ ting(880); floaters(["💜","✨","🤍","🎃","✨","💗"], 14); }, 900);
+  later(function(){ ting(880); floaters(["ic-hrt","ic-spk","ic-hrt","ic-pum","ic-spk","ic-hrt"], 14); }, 900);
 }
 
 /* ---- Letter toggle ---- */
@@ -374,7 +497,7 @@ $("again").addEventListener("click", function(){
   $("slot").textContent = ""; $("case").classList.remove("closed"); $("pt").textContent = "0/4";
   Array.prototype.forEach.call($("prog").children, function(i){ i.classList.remove("on"); if (i.tagName === "I") i.textContent = ""; });
   $("cap").textContent = "แตะที่กระเป๋าเพื่อเริ่มใส่ของ 🧳";
-  $("pl").classList.remove("fly"); $("s4").classList.remove("play"); $("fl").textContent = "";
+  resetPlane(); $("s4").classList.remove("play"); $("fl").textContent = "";
   $("paper").classList.remove("open"); $("lbtn").setAttribute("aria-expanded", "false"); $("lbtn").lastChild.textContent = "แตะเพื่ออ่านจดหมายถึงเธอ";
   $("note").textContent = ""; $("env").classList.remove("open"); $("open").disabled = false;
   go("s1"); $("open").focus({preventScroll:true});
